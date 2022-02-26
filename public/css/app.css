@@ -917,10 +917,6 @@ select {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 }
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -962,10 +958,6 @@ select {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -989,9 +981,6 @@ select {
 }
 .leading-5 {
   line-height: 1.25rem;
-}
-.leading-tight {
-  line-height: 1.25;
 }
 .leading-7 {
   line-height: 1.75rem;
@@ -1018,10 +1007,6 @@ select {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
-.text-gray-800 {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
-}
 .text-gray-200 {
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
@@ -1041,6 +1026,10 @@ select {
 .text-green-600 {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 .text-red-600 {
   --tw-text-opacity: 1;
@@ -1128,6 +1117,20 @@ select {
 }
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+.game-card {
+    padding: 10px 5px;
+    margin: auto;
+    width: 50%;
+}
+.guessing-input{
+    display: block;
+    border: solid 1px #4a5568;
+    border-radius: 4px;
+}
+.submit {
+    background-color: #2563eb;
+
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
@@ -1384,4 +1387,5 @@ select {
     padding-right: 2rem;
   }
 }
+
 

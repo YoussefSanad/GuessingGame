@@ -1,3 +1,23 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+
+
+.game-card {
+    padding: 10px 5px;
+    margin: auto;
+    width: 50%;
+}
+
+.guessing-input{
+    display: block;
+    border: solid 1px #4a5568;
+    border-radius: 4px;
+}
+
+.submit {
+    background-color: #2563eb;
+
+}
+
