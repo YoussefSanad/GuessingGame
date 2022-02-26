@@ -5625,6 +5625,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
+var main = document.getElementById('main');
+Echo.channel('notification').listen('MessageNotification', function (e) {
+  console.log(e.message);
+});
 
 /***/ }),
 
@@ -5658,8 +5662,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "603ec391c6845875384e",
   cluster: "eu",
-  forceTLS: true,
-  encryption: true
+  forceTLS: true // encryption: true
+
 });
 
 /***/ }),

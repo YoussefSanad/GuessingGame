@@ -12,9 +12,8 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('lobbies', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->boolean('active');
             $table->integer('target_number');
             $table->timestamps();
@@ -28,6 +27,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('lobbies');
+        Schema::dropIfExists('games');
     }
 };

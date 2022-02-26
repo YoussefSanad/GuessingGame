@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\MessageNotification;
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -14,6 +15,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel(MessageNotification::CHANNEL_NAME, function () {
-    return true;
+Broadcast::channel(MessageNotification::CHANNEL_NAME, function (User $user) {
+    return $user->id == auth()->user()->id;
 });

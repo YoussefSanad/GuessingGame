@@ -13,6 +13,7 @@ class MessageNotification implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     const CHANNEL_NAME = 'notification';
+
     public string $message;
 
     /**
@@ -25,12 +26,11 @@ class MessageNotification implements ShouldBroadcast
         $this->message = $message;
     }
 
+
     /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * @return Channel
      */
-    public function broadcastOn()
+    public function broadcastOn(): Channel
     {
         return new Channel(self::CHANNEL_NAME);
     }
