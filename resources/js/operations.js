@@ -6,9 +6,11 @@ forms.forEach((form) => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         result.innerHTML = '';
+        sessionStorage.setItem('user_id', form.getAttribute('data-user-id'))
         contactApi(form);
     });
 });
+
 
 const contactApi = form => {
     let url = form.getAttribute('action');
@@ -20,5 +22,6 @@ const contactApi = form => {
         })
         .catch(error => {
             console.log(error);
+            result.innerHTML = "Something went wrong";
         });
 }

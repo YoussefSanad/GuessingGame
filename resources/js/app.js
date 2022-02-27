@@ -8,7 +8,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-const result = document.getElementById('result');
 
 
 

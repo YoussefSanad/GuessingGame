@@ -5629,7 +5629,6 @@ __webpack_require__(/*! ./operations */ "./resources/js/operations.js");
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
-var result = document.getElementById('result');
 
 /***/ }),
 
@@ -5675,9 +5674,19 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   \**********************************/
 /***/ (() => {
 
+var result = document.getElementById('result');
 Echo.channel('notification').listen('MessageNotification', function (e) {
-  if (e.winner) {} else {
-    result.innerHTML = e.message; // result.classList.add('')
+  if (e.userID == sessionStorage.getItem('user_id')) {
+    if (e.winner) {
+      //you sent the message and you were correct
+      result.innerHTML = e.message;
+    } else {
+      //you sent the message and it was not correct .. guess again
+      result.innerHTML = e.message;
+    }
+  } else if (e.winner) {
+    // some one else wone.
+    result.innerHTML = 'Someone guessed the number before you!';
   }
 });
 
@@ -5695,6 +5704,7 @@ forms.forEach(function (form) {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     result.innerHTML = '';
+    sessionStorage.setItem('user_id', form.getAttribute('data-user-id'));
     contactApi(form);
   });
 });
@@ -5709,6 +5719,7 @@ var contactApi = function contactApi(form) {
     console.log(response.data);
   })["catch"](function (error) {
     console.log(error);
+    result.innerHTML = "Something went wrong";
   });
 };
 

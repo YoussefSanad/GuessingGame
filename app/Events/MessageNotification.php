@@ -15,6 +15,7 @@ class MessageNotification implements ShouldBroadcast
     const CHANNEL_NAME = 'notification';
 
     public string $message;
+    public int    $userID;
     public ?int   $winner;
 
     /**
@@ -25,6 +26,7 @@ class MessageNotification implements ShouldBroadcast
     public function __construct(string $message, int $userID, ?int $winner = null)
     {
         $this->message = $message;
+        $this->userID = $userID;
         $this->winner = $winner;
     }
 
