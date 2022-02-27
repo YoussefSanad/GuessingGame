@@ -4,10 +4,12 @@ namespace Tests\Unit;
 
 use App\Enums\NumberAssessmentValue;
 use App\Operations\GameEngine;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
 class GameEngineTest extends TestCase
 {
+    use RefreshDatabase;
 
     public function test_assessNumber_whenGivenNumberIsLessThanTargetNumber_returnsLow()
     {
