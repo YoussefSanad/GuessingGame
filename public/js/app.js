@@ -5622,13 +5622,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./listener */ "./resources/js/listener.js");
+
+__webpack_require__(/*! ./operations */ "./resources/js/operations.js");
+
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
-var main = document.getElementById('main');
-Echo.channel('notification').listen('MessageNotification', function (e) {
-  console.log(e.message);
-});
+var result = document.getElementById('result');
 
 /***/ }),
 
@@ -5665,6 +5666,51 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   forceTLS: true // encryption: true
 
 });
+
+/***/ }),
+
+/***/ "./resources/js/listener.js":
+/*!**********************************!*\
+  !*** ./resources/js/listener.js ***!
+  \**********************************/
+/***/ (() => {
+
+Echo.channel('notification').listen('MessageNotification', function (e) {
+  if (e.winner) {} else {
+    result.innerHTML = e.message; // result.classList.add('')
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/operations.js":
+/*!************************************!*\
+  !*** ./resources/js/operations.js ***!
+  \************************************/
+/***/ (() => {
+
+var baseUrl = window.location.origin;
+var forms = Array.from(document.getElementsByClassName('game-form'));
+forms.forEach(function (form) {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    result.innerHTML = '';
+    contactApi(form);
+  });
+});
+
+var contactApi = function contactApi(form) {
+  var url = form.getAttribute('action');
+  var endpoint = "".concat(baseUrl).concat(url);
+  var input = form.getElementsByClassName('guessing-input')[0];
+  axios.post(endpoint, {
+    guess: input.value
+  }).then(function (response) {
+    console.log(response.data);
+  })["catch"](function (error) {
+    console.log(error);
+  });
+};
 
 /***/ }),
 

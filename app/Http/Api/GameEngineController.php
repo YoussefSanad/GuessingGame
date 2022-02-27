@@ -39,7 +39,7 @@ class GameEngineController extends Controller
     private function validateInput(Request $request)
     {
         $request->validate([
-            'guess' => 'required|numeric|min:1|max:100'
+            'guess' => 'required|numeric|min:1|max:100',
         ]);
     }
 

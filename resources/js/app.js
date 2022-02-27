@@ -1,4 +1,6 @@
 require('./bootstrap');
+require('./listener');
+require('./operations');
 
 import Alpine from 'alpinejs';
 
@@ -6,9 +8,8 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-let main = document.getElementById('main');
+const result = document.getElementById('result');
 
-Echo.channel('notification')
-    .listen('MessageNotification', (e) => {
-        console.log(e.message);
-    });
+
+
+

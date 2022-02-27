@@ -22,14 +22,6 @@ Route::middleware([Authenticate::class])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('listen', function () {
-        return view('listen');
-    });
-
-    Route::get('event', function () {
-        event(new MessageNotification('This is our first broadcase message'));
-    });
-
     Route::get('start_game', [GameController::class, 'showGame']);
 
 });
