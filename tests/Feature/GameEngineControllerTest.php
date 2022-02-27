@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Events\MessageNotification;
 use App\Models\Game;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
@@ -13,14 +14,25 @@ class GameEngineControllerTest extends TestCase
     use RefreshDatabase;
 
     private Game   $game;
+    private User   $user;
     private string $url;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->game = Game::factory()->create();
-        $this->url = sprintf("/api/games/%d/guess", $this->game->id);
+        $this->user = User::factory()->create();
+        $this->url = sprintf("/api/games/%d/users/%d/guess", $this->game->id, $this->user->id);
+    }
 
+    public function test_guess_whenPassingNonExistingUserID()
+    {
+        $randomUserId = 5;
+        $this->url = sprintf("/api/games/%d/users/%d/guess", $this->game->id, $randomUserId);
+
+        $response = $this->post($this->url, ['guess' => $this->game->target_number + 1]);
+
+        $response->assertStatus(404);
     }
 
     public function test_guess_existsAndBroadcastsMessageNotificationEventWhenNotMatched()

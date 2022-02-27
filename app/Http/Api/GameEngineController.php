@@ -5,6 +5,7 @@ namespace App\Http\Api;
 use App\Events\MessageNotification;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use App\Models\User;
 use App\Operations\GameEngine;
 use Illuminate\Http\Request;
 
@@ -16,18 +17,18 @@ class GameEngineController extends Controller
      * @param Request $request
      * @return void
      */
-    public function guess(Game $game, Request $request)
+    public function guess(Game $game, User $user, Request $request)
     {
         if (!$game->active)
         {
-            event(new MessageNotification('Game Finished', 0));
+            event(new MessageNotification('Game Finished', $user->id, 0));
         }
         else
         {
             $this->validateInput($request);
             $assessment = GameEngine::assessNumber($request->guess, $game->target_number);
             if ($assessment->isCorrectGuess()) $game->closeGame();
-            event(new MessageNotification($assessment->message(), $assessment->isCorrectGuess()));
+            event(new MessageNotification($assessment->message(), $user->id, $assessment->isCorrectGuess()));
         }
     }
 

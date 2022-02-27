@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('games/{game}/guess', [GameEngineController::class, 'guess']);
+Route::post('games/{game}/users/{user}/guess', [GameEngineController::class, 'guess']);
