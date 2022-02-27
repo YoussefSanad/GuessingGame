@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed target_number
+ */
 class Game extends Model
 {
     use HasFactory;
@@ -12,12 +15,21 @@ class Game extends Model
     protected $guarded = ['id'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection|Model|mixed
+     * @return mixed
      */
-    public static function getActiveGame()
+    public static function getActiveGame(): mixed
     {
         $activeGame = self::whereActive(1)->first();
         return $activeGame ?? self::factory()->create();
-
     }
+
+
+    /**
+     * Sets the game as inactive,
+     */
+    public function closeGame()
+    {
+        $this->update(['active' => false]);
+    }
+
 }

@@ -2,7 +2,7 @@
 
 namespace App\Operations;
 
-use App\Enums\NumberAssesmentValue;
+use App\Enums\NumberAssessmentValue;
 
 class GameEngine
 {
@@ -11,13 +11,13 @@ class GameEngine
     /**
      * @param int $number
      * @param int $targetNumber
-     * @return NumberAssesmentValue
+     * @return NumberAssessmentValue
      */
-    public static function assessNumber(int $number, int $targetNumber): NumberAssesmentValue
+    public static function assessNumber(int $number, int $targetNumber): NumberAssessmentValue
     {
-        if ($number < $targetNumber) return NumberAssesmentValue::LOW;
-        if ($number > $targetNumber) return NumberAssesmentValue::HIGH;
-        return NumberAssesmentValue::MATCH;
+        if ($number < $targetNumber) return NumberAssessmentValue::LOW;
+        if ($number > $targetNumber) return NumberAssessmentValue::HIGH;
+        return NumberAssessmentValue::MATCH;
     }
 
 }
