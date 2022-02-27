@@ -25,5 +25,5 @@ const contactApi = form => {
 
 const clearResult = () => {
     result.innerHTML = 'Guessing....';
-    result.classList.remove('worng-result', 'correct-result');
+    result.classList.remove('wrong-result');
 }

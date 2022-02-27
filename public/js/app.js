@@ -5676,27 +5676,32 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 var result = document.getElementById('result');
 var readyButton = document.getElementById('ready-button');
-var minNumberOfPlayers = 3;
+var readyText = document.getElementById('ready-text');
+var readyCard = document.getElementById('ready-card');
+var gameCard = document.getElementById('game-card');
+var minNumberOfPlayers = 2;
+var numberOfActivePlayers = 0;
 
 if (readyButton) {
-  readyButton.addEventListener('click', listen);
-}
-
-var listen = function listen() {
-  Echo.join("notification").here(function (users) {
-    if (users.length >= minNumberOfPlayers) {
-      startGame();
-    }
-  }).joining(function (user) {
-    console.log(user.name);
-  }).leaving(function (user) {
-    console.log(user.name + ' left');
-  }).error(function (error) {
-    console.error(error);
-  }).listen('MessageNotification', function (e) {
-    return showResult(e);
+  readyButton.addEventListener('click', function (e) {
+    getReady();
+    Echo.join("notification").here(function (users) {
+      numberOfActivePlayers = users.length;
+      startGame(numberOfActivePlayers);
+    }).joining(function (user) {
+      console.log(user.name + 'joined');
+      numberOfActivePlayers++;
+      startGame(numberOfActivePlayers);
+    }).leaving(function (user) {
+      console.log(user.name + ' left');
+      numberOfActivePlayers--;
+    }).error(function (error) {
+      console.error(error);
+    }).listen('MessageNotification', function (e) {
+      return showResult(e);
+    });
   });
-};
+}
 
 var showResult = function showResult(e) {
   if (e.userID == sessionStorage.getItem('user_id')) {
@@ -5715,6 +5720,22 @@ var showResult = function showResult(e) {
     result.innerHTML = 'Someone guessed the number before you!';
   }
 };
+
+var getReady = function getReady() {
+  readyButton.hidden = true;
+  readyText.hidden = false;
+};
+
+var startGame = function startGame(numberOfActivePlayers) {
+  console.log(numberOfActivePlayers);
+
+  if (numberOfActivePlayers >= minNumberOfPlayers) {
+    readyCard.hidden = true;
+    gameCard.hidden = false;
+  }
+};
+
+var closeGame = function closeGame() {};
 
 /***/ }),
 
@@ -5749,7 +5770,7 @@ var contactApi = function contactApi(form) {
 
 var clearResult = function clearResult() {
   result.innerHTML = 'Guessing....';
-  result.classList.remove('worng-result', 'correct-result');
+  result.classList.remove('wrong-result');
 };
 
 /***/ }),

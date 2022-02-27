@@ -1,29 +1,33 @@
 const result = document.getElementById('result');
 const readyButton = document.getElementById('ready-button');
-const minNumberOfPlayers = 3;
+const readyText = document.getElementById('ready-text');
+const readyCard = document.getElementById('ready-card');
+const gameCard = document.getElementById('game-card');
+const minNumberOfPlayers = 2;
+let numberOfActivePlayers = 0;
 
-if (readyButton)
-{
-    readyButton.addEventListener('click', listen);
-}
-
-const listen = () => {
-    Echo.join(`notification`)
-        .here((users) => {
-
-            if (users.length >= minNumberOfPlayers) {
-                startGame();
-            }
-        })
-        .joining((user) => {
-            console.log(user.name);
-        })
-        .leaving((user) => {
-            console.log(user.name + ' left');
-        })
-        .error((error) => {
-            console.error(error);
-        }).listen('MessageNotification', (e) => showResult(e));
+if (readyButton) {
+    readyButton.addEventListener('click', (e) => {
+            getReady();
+            Echo.join(`notification`)
+                .here((users) => {
+                    numberOfActivePlayers = users.length;
+                    startGame(numberOfActivePlayers);
+                })
+                .joining((user) => {
+                    console.log(user.name + 'joined');
+                    numberOfActivePlayers++;
+                    startGame(numberOfActivePlayers);
+                })
+                .leaving((user) => {
+                    console.log(user.name + ' left');
+                    numberOfActivePlayers--;
+                })
+                .error((error) => {
+                    console.error(error);
+                }).listen('MessageNotification', (e) => showResult(e));
+        }
+    );
 }
 
 const showResult = (e) => {
@@ -39,5 +43,22 @@ const showResult = (e) => {
         result.classList.add('wrong-result');
         result.innerHTML = 'Someone guessed the number before you!';
     }
+}
+
+const getReady = () => {
+    readyButton.hidden = true;
+    readyText.hidden = false;
+}
+
+const startGame = (numberOfActivePlayers) => {
+    console.log(numberOfActivePlayers);
+    if (numberOfActivePlayers >= minNumberOfPlayers) {
+        readyCard.hidden = true;
+        gameCard.hidden = false;
+    }
+}
+
+const closeGame = () => {
+
 }
 
