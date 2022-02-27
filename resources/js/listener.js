@@ -1,12 +1,15 @@
-const guessResult = document.getElementById('guess-result');
 const readyButton = document.getElementById('ready-button');
 const readyText = document.getElementById('ready-text');
 const readyCard = document.getElementById('ready-card');
+
 const gameCard = document.getElementById('game-card');
+const guessResult = document.getElementById('guess-result');
+
 const resultsCard = document.getElementById('results-card');
 const resultText = document.getElementById('result-text');
 const resultImage = document.getElementById('result-image');
-const minNumberOfPlayers = 2;
+
+const minNumberOfPlayers = 3;
 let numberOfActivePlayers = 0;
 
 if (readyButton) {
@@ -53,7 +56,6 @@ const getReady = () => {
 }
 
 const startGame = (numberOfActivePlayers) => {
-    console.log(numberOfActivePlayers);
     if (numberOfActivePlayers >= minNumberOfPlayers) {
         readyCard.hidden = true;
         gameCard.hidden = false;

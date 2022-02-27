@@ -5674,15 +5674,15 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   \**********************************/
 /***/ (() => {
 
-var guessResult = document.getElementById('guess-result');
 var readyButton = document.getElementById('ready-button');
 var readyText = document.getElementById('ready-text');
 var readyCard = document.getElementById('ready-card');
 var gameCard = document.getElementById('game-card');
+var guessResult = document.getElementById('guess-result');
 var resultsCard = document.getElementById('results-card');
 var resultText = document.getElementById('result-text');
 var resultImage = document.getElementById('result-image');
-var minNumberOfPlayers = 2;
+var minNumberOfPlayers = 3;
 var numberOfActivePlayers = 0;
 
 if (readyButton) {
@@ -5728,8 +5728,6 @@ var getReady = function getReady() {
 };
 
 var startGame = function startGame(numberOfActivePlayers) {
-  console.log(numberOfActivePlayers);
-
   if (numberOfActivePlayers >= minNumberOfPlayers) {
     readyCard.hidden = true;
     gameCard.hidden = false;
