@@ -1,4 +1,5 @@
 const baseUrl = window.location.origin;
+const guessResult = document.getElementById('guess-result');
 
 let forms = Array.from(document.getElementsByClassName('game-form'));
 
@@ -19,11 +20,11 @@ const contactApi = form => {
     axios.post(endpoint, {guess: input.value})
         .catch(error => {
             console.log(error);
-            result.innerHTML = "Something went wrong";
+            guessResult.innerHTML = "Something went wrong";
         });
 }
 
 const clearResult = () => {
-    result.innerHTML = 'Guessing....';
-    result.classList.remove('wrong-result');
+    guessResult.innerHTML = 'Guessing....';
+    guessResult.classList.remove('wrong-result');
 }

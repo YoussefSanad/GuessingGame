@@ -5674,11 +5674,14 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   \**********************************/
 /***/ (() => {
 
-var result = document.getElementById('result');
+var guessResult = document.getElementById('guess-result');
 var readyButton = document.getElementById('ready-button');
 var readyText = document.getElementById('ready-text');
 var readyCard = document.getElementById('ready-card');
 var gameCard = document.getElementById('game-card');
+var resultsCard = document.getElementById('results-card');
+var resultText = document.getElementById('result-text');
+var resultImage = document.getElementById('result-image');
 var minNumberOfPlayers = 2;
 var numberOfActivePlayers = 0;
 
@@ -5707,17 +5710,15 @@ var showResult = function showResult(e) {
   if (e.userID == sessionStorage.getItem('user_id')) {
     if (e.winner) {
       //you sent the message and you were correct
-      result.classList.add('correct-result');
-      result.innerHTML = e.message;
+      closeGame('You win', 'correct-result', true);
     } else {
       //you sent the message and it was not correct .. guess again
-      result.classList.add('wrong-result');
-      result.innerHTML = e.message;
+      guessResult.classList.add('wrong-result');
+      guessResult.innerHTML = e.message;
     }
   } else if (e.winner) {
-    // some one else wone.
-    result.classList.add('wrong-result');
-    result.innerHTML = 'Someone guessed the number before you!';
+    // some one else won.
+    closeGame('You Lose', 'wrong-result');
   }
 };
 
@@ -5735,7 +5736,14 @@ var startGame = function startGame(numberOfActivePlayers) {
   }
 };
 
-var closeGame = function closeGame() {};
+var closeGame = function closeGame(resultsText, resultClass) {
+  var celebrate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  gameCard.hidden = true;
+  resultsCard.hidden = false;
+  resultText.innerHTML = resultsText;
+  resultText.classList.add(resultClass);
+  resultImage.hidden = !celebrate;
+};
 
 /***/ }),
 
@@ -5746,6 +5754,7 @@ var closeGame = function closeGame() {};
 /***/ (() => {
 
 var baseUrl = window.location.origin;
+var guessResult = document.getElementById('guess-result');
 var forms = Array.from(document.getElementsByClassName('game-form'));
 forms.forEach(function (form) {
   form.addEventListener('submit', function (e) {
@@ -5764,13 +5773,13 @@ var contactApi = function contactApi(form) {
     guess: input.value
   })["catch"](function (error) {
     console.log(error);
-    result.innerHTML = "Something went wrong";
+    guessResult.innerHTML = "Something went wrong";
   });
 };
 
 var clearResult = function clearResult() {
-  result.innerHTML = 'Guessing....';
-  result.classList.remove('wrong-result');
+  guessResult.innerHTML = 'Guessing....';
+  guessResult.classList.remove('wrong-result');
 };
 
 /***/ }),

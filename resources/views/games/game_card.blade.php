@@ -22,10 +22,14 @@
     </div>
 
     <div class="main-card">
-        <div id="result">
+        <div id="guess-result">
             Start Guessing
         </div>
     </div>
 
 </div>
 
+<div class="main-card" id="results-card" hidden>
+    <h1 class="title" id="result-text">You Win</h1>
+    <img src="{{asset('img/fireworks.png')}}" alt="Fireworks" id="result-image" hidden>
+</div>
