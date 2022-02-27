@@ -1162,7 +1162,7 @@ select {
 .center {
     margin: auto;
 }
-/*Dashboard*/
+/*Game Screen*/
 .game-card {
     padding: 10px 5px;
     margin: auto;
@@ -1176,7 +1176,6 @@ select {
 .submit {
     background-color: #2563eb;
 }
-/*Game Screen*/
 .user-image {
     border-radius: 100%;
 }
@@ -1206,7 +1205,7 @@ select {
     width: 50%;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-#results-image {
+.results-image {
     height: 60%;
     width: 60%;
     margin: auto;

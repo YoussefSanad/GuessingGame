@@ -1,3 +1,5 @@
+const baseUrl = window.location.origin;
+
 const readyButton = document.getElementById('ready-button');
 const readyText = document.getElementById('ready-text');
 const readyCard = document.getElementById('ready-card');
@@ -7,13 +9,14 @@ const guessResult = document.getElementById('guess-result');
 
 const resultsCard = document.getElementById('results-card');
 const resultText = document.getElementById('result-text');
-const resultImage = document.getElementById('result-image');
+const fireworksImage = document.getElementById('fireworks');
+const betterLuckImage = document.getElementById('better-luck');
 
-const minNumberOfPlayers = 3;
+const minNumberOfPlayers = 2;
 let numberOfActivePlayers = 0;
 
 if (readyButton) {
-    readyButton.addEventListener('click', (e) => {
+    readyButton.addEventListener('click', (event) => {
             getReady();
             Echo.join(`notification`)
                 .here((users) => {
@@ -36,15 +39,15 @@ if (readyButton) {
     );
 }
 
-const showResult = (e) => {
-    if (e.userID == sessionStorage.getItem('user_id')) {
-        if (e.winner) { //you sent the message and you were correct
+const showResult = (event) => {
+    if (event.userID == sessionStorage.getItem('user_id')) {
+        if (event.winner) { //you sent the message and you were correct
             closeGame('You win', 'correct-result', true);
         } else { //you sent the message and it was not correct .. guess again
             guessResult.classList.add('wrong-result');
-            guessResult.innerHTML = e.message;
+            guessResult.innerHTML = event.message;
         }
-    } else if (e.winner) { // some one else won.
+    } else if (event.winner) { // some one else won.
         closeGame('You Lose', 'wrong-result');
 
     }
@@ -67,6 +70,11 @@ const closeGame = (resultsText, resultClass, celebrate = false) => {
     resultsCard.hidden = false;
     resultText.innerHTML = resultsText;
     resultText.classList.add(resultClass);
-    resultImage.hidden = !celebrate;
+    if (celebrate) {
+        fireworksImage.hidden = false;
+    } else {
+        betterLuckImage.hidden = false;
+    }
 }
+
 

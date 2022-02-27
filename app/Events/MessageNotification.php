@@ -38,6 +38,5 @@ class MessageNotification implements ShouldBroadcast
     public function broadcastOn(): PresenceChannel
     {
         return new PresenceChannel(self::CHANNEL_NAME);
-//        return new Channel(self::CHANNEL_NAME);
     }
 }

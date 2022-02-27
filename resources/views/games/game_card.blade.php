@@ -31,5 +31,7 @@
 
 <div class="main-card" id="results-card" hidden>
     <h1 class="title" id="result-text">You Win</h1>
-    <img src="{{asset('img/fireworks.png')}}" alt="Fireworks" id="result-image" hidden>
+    <img src="{{asset('img/fireworks.png')}}" class="results-image" alt="Fireworks" id="fireworks" hidden>
+    <img src="{{asset('img/blnt.jpg')}}" class="results-image" alt="Better luck next time" id="better-luck" hidden>
+    <a href="/" class="btn btn-primary" style="margin-top: 10px">Back to home</a>
 </div>

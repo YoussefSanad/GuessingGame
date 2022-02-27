@@ -4,8 +4,8 @@ const guessResult = document.getElementById('guess-result');
 let forms = Array.from(document.getElementsByClassName('game-form'));
 
 forms.forEach((form) => {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
         clearResult();
         sessionStorage.setItem('user_id', form.getAttribute('data-user-id'))
         contactApi(form);

@@ -41,33 +41,4 @@ class GameEngineTest extends TestCase
         $this->assertEquals(NumberAssessmentValue::MATCH, $output);
     }
 
-    public function test_message_onReturnedEnums()
-    {
-        $targetNumber = 5;
-        $givenNumber = 5;
-
-        $match = GameEngine::assessNumber($givenNumber, $targetNumber);
-        $higher = GameEngine::assessNumber($givenNumber + 1, $targetNumber);
-        $lower = GameEngine::assessNumber($givenNumber - 1, $targetNumber);
-
-        $this->assertEquals(NumberAssessmentValue::MATCH->message(), $match->message());
-        $this->assertEquals(NumberAssessmentValue::HIGH->message(), $higher->message());
-        $this->assertEquals(NumberAssessmentValue::LOW->message(), $lower->message());
-
-    }
-
-    public function test_isCorrectGuess_onReturnedEnums()
-    {
-        $targetNumber = 5;
-        $givenNumber = 5;
-
-        $match = GameEngine::assessNumber($givenNumber, $targetNumber);
-        $higher = GameEngine::assessNumber($givenNumber + 1, $targetNumber);
-        $lower = GameEngine::assessNumber($givenNumber - 1, $targetNumber);
-
-        $this->assertTrue($match->isCorrectGuess());
-        $this->assertFalse($higher->isCorrectGuess());
-        $this->assertFalse($lower->isCorrectGuess());
-
-    }
 }

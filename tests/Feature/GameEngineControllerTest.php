@@ -25,7 +25,7 @@ class GameEngineControllerTest extends TestCase
         $this->url = sprintf("/api/games/%d/users/%d/guess", $this->game->id, $this->user->id);
     }
 
-    public function test_guess_whenPassingNonExistingUserID()
+    public function test_guess_whenPassingNonExistingUserID_returnsNotFoundStatus()
     {
         $randomUserId = 5;
         $this->url = sprintf("/api/games/%d/users/%d/guess", $this->game->id, $randomUserId);
@@ -35,51 +35,70 @@ class GameEngineControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_guess_existsAndBroadcastsMessageNotificationEventWhenNotMatched()
+
+    public function test_guess_whenCalledWithValidUserAndValidGameId_returnsSuccessStatus()
+    {
+        $response = $this->post($this->url, ['guess' => $this->game->target_number]);
+        $response->assertStatus(200);
+    }
+
+    public function test_guess_whenGuessIsNotMatched_broadcastsMessageNotificationEvent()
     {
         Event::fake();
         $this->post($this->url, ['guess' => $this->game->target_number + 1]);
+        Event::assertDispatched(MessageNotification::class, 1);
+
         $this->post($this->url, ['guess' => $this->game->target_number - 1]);
         Event::assertDispatched(MessageNotification::class, 2);
     }
 
-    public function test_guess_existsAndBroadcastsMessageNotificationEventWhenMatched()
+    public function test_guess_whenGuessIsMatched_broadcastsMessageNotificationEvent()
     {
         Event::fake();
         $response = $this->post($this->url, ['guess' => $this->game->target_number]);
 
         $response->assertStatus(200);
-        Event::assertDispatched(MessageNotification::class);
+        Event::assertDispatched(MessageNotification::class, 1);
     }
 
-    public function test_guess_closesTheGameWhenMatched()
+    public function test_guess_whenPassingTheCorrectGuess_setsTheGameAsInactive()
     {
-        $response = $this->post($this->url, ['guess' => $this->game->target_number]);
+        $this->post($this->url, ['guess' => $this->game->target_number]);
         $this->game->refresh();
 
-        $response->assertStatus(200);
         $this->assertFalse((bool)$this->game->active);
-
     }
 
-    public function test_guess_validation()
+    public function test_guess_whenGuessNumberIsLessThanOne_hasValidationError()
+    {
+        $numberLessThanOne = 0;
+        $response = $this->post($this->url, ['guess' => $numberLessThanOne]);
+
+        $response->assertSessionHasErrors(['guess']);
+    }
+
+    public function test_guess_whenGuessNumberIsMoreThanOneHundred_hasValidationError()
+    {
+        $numberMoreThanOneHundred = 101;
+        $response = $this->post($this->url, ['guess' => $numberMoreThanOneHundred]);
+
+        $response->assertSessionHasErrors(['guess']);
+    }
+
+    public function test_guess_whenGuessNumberIsNotNumeric_hasValidationError()
     {
         $randomString = 'random-string';
-        $numberLessThanOne = 0;
-        $numberMoreThanOneHundred = 100;
-        $validNumber = 50;
-
-        $response = $this->post($this->url, ['guess' => $validNumber]);
-        $response->assertSessionHasNoErrors();
 
         $response = $this->post($this->url, ['guess' => $randomString]);
         $response->assertSessionHasErrors(['guess']);
+    }
 
-        $response = $this->post($this->url, ['guess' => $numberLessThanOne]);
-        $response->assertSessionHasErrors(['guess']);
+    public function test_guess_whenGuessNumberIsNumericAndBetweenOneAndOneHundred_hasNoValidationError()
+    {
+        $validNumber = 50;
+        $response = $this->post($this->url, ['guess' => $validNumber]);
 
-        $response = $this->post($this->url, ['guess' => $numberMoreThanOneHundred]);
-        $response->assertSessionHasErrors(['guess']);
+        $response->assertSessionHasNoErrors();
     }
 
 }

@@ -5674,6 +5674,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   \**********************************/
 /***/ (() => {
 
+var baseUrl = window.location.origin;
 var readyButton = document.getElementById('ready-button');
 var readyText = document.getElementById('ready-text');
 var readyCard = document.getElementById('ready-card');
@@ -5681,12 +5682,13 @@ var gameCard = document.getElementById('game-card');
 var guessResult = document.getElementById('guess-result');
 var resultsCard = document.getElementById('results-card');
 var resultText = document.getElementById('result-text');
-var resultImage = document.getElementById('result-image');
-var minNumberOfPlayers = 3;
+var fireworksImage = document.getElementById('fireworks');
+var betterLuckImage = document.getElementById('better-luck');
+var minNumberOfPlayers = 2;
 var numberOfActivePlayers = 0;
 
 if (readyButton) {
-  readyButton.addEventListener('click', function (e) {
+  readyButton.addEventListener('click', function (event) {
     getReady();
     Echo.join("notification").here(function (users) {
       numberOfActivePlayers = users.length;
@@ -5706,17 +5708,17 @@ if (readyButton) {
   });
 }
 
-var showResult = function showResult(e) {
-  if (e.userID == sessionStorage.getItem('user_id')) {
-    if (e.winner) {
+var showResult = function showResult(event) {
+  if (event.userID == sessionStorage.getItem('user_id')) {
+    if (event.winner) {
       //you sent the message and you were correct
       closeGame('You win', 'correct-result', true);
     } else {
       //you sent the message and it was not correct .. guess again
       guessResult.classList.add('wrong-result');
-      guessResult.innerHTML = e.message;
+      guessResult.innerHTML = event.message;
     }
-  } else if (e.winner) {
+  } else if (event.winner) {
     // some one else won.
     closeGame('You Lose', 'wrong-result');
   }
@@ -5740,7 +5742,12 @@ var closeGame = function closeGame(resultsText, resultClass) {
   resultsCard.hidden = false;
   resultText.innerHTML = resultsText;
   resultText.classList.add(resultClass);
-  resultImage.hidden = !celebrate;
+
+  if (celebrate) {
+    fireworksImage.hidden = false;
+  } else {
+    betterLuckImage.hidden = false;
+  }
 };
 
 /***/ }),
@@ -5755,8 +5762,8 @@ var baseUrl = window.location.origin;
 var guessResult = document.getElementById('guess-result');
 var forms = Array.from(document.getElementsByClassName('game-form'));
 forms.forEach(function (form) {
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
     clearResult();
     sessionStorage.setItem('user_id', form.getAttribute('data-user-id'));
     contactApi(form);
