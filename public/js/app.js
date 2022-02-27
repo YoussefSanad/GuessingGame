@@ -5684,7 +5684,7 @@ var resultsCard = document.getElementById('results-card');
 var resultText = document.getElementById('result-text');
 var fireworksImage = document.getElementById('fireworks');
 var betterLuckImage = document.getElementById('better-luck');
-var minNumberOfPlayers = 2;
+var minNumberOfPlayers = 3;
 var numberOfActivePlayers = 0;
 
 if (readyButton) {

@@ -12,7 +12,7 @@ const resultText = document.getElementById('result-text');
 const fireworksImage = document.getElementById('fireworks');
 const betterLuckImage = document.getElementById('better-luck');
 
-const minNumberOfPlayers = 2;
+const minNumberOfPlayers = 3;
 let numberOfActivePlayers = 0;
 
 if (readyButton) {

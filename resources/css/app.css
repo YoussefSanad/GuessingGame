@@ -107,13 +107,13 @@
     color: var(--correct-result-color);
 }
 
-#results-card{
+#results-card {
     position: fixed;
     top: 25%;
     height: 50%;
     left: 25%;
     width: 50%;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .results-image {
