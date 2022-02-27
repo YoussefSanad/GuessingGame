@@ -5675,20 +5675,46 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /***/ (() => {
 
 var result = document.getElementById('result');
-Echo.channel('notification').listen('MessageNotification', function (e) {
+var readyButton = document.getElementById('ready-button');
+var minNumberOfPlayers = 3;
+
+if (readyButton) {
+  readyButton.addEventListener('click', listen);
+}
+
+var listen = function listen() {
+  Echo.join("notification").here(function (users) {
+    if (users.length >= minNumberOfPlayers) {
+      startGame();
+    }
+  }).joining(function (user) {
+    console.log(user.name);
+  }).leaving(function (user) {
+    console.log(user.name + ' left');
+  }).error(function (error) {
+    console.error(error);
+  }).listen('MessageNotification', function (e) {
+    return showResult(e);
+  });
+};
+
+var showResult = function showResult(e) {
   if (e.userID == sessionStorage.getItem('user_id')) {
     if (e.winner) {
       //you sent the message and you were correct
+      result.classList.add('correct-result');
       result.innerHTML = e.message;
     } else {
       //you sent the message and it was not correct .. guess again
+      result.classList.add('wrong-result');
       result.innerHTML = e.message;
     }
   } else if (e.winner) {
     // some one else wone.
+    result.classList.add('wrong-result');
     result.innerHTML = 'Someone guessed the number before you!';
   }
-});
+};
 
 /***/ }),
 
@@ -5703,7 +5729,7 @@ var forms = Array.from(document.getElementsByClassName('game-form'));
 forms.forEach(function (form) {
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    result.innerHTML = '';
+    clearResult();
     sessionStorage.setItem('user_id', form.getAttribute('data-user-id'));
     contactApi(form);
   });
@@ -5715,12 +5741,15 @@ var contactApi = function contactApi(form) {
   var input = form.getElementsByClassName('guessing-input')[0];
   axios.post(endpoint, {
     guess: input.value
-  }).then(function (response) {
-    console.log(response.data);
   })["catch"](function (error) {
     console.log(error);
     result.innerHTML = "Something went wrong";
   });
+};
+
+var clearResult = function clearResult() {
+  result.innerHTML = 'Guessing....';
+  result.classList.remove('worng-result', 'correct-result');
 };
 
 /***/ }),

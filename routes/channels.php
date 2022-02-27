@@ -16,5 +16,5 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel(MessageNotification::CHANNEL_NAME, function (User $user) {
-    return $user->id == auth()->user()->id;
+    return ['id' => $user->id, 'name' => $user->name];
 });
