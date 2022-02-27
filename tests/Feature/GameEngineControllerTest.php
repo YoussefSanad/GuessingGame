@@ -35,7 +35,7 @@ class GameEngineControllerTest extends TestCase
     {
         Event::fake();
         $response = $this->post($this->url, ['guess' => $this->game->target_number]);
-        
+
         $response->assertStatus(200);
         Event::assertDispatched(MessageNotification::class);
     }
@@ -48,6 +48,26 @@ class GameEngineControllerTest extends TestCase
         $response->assertStatus(200);
         $this->assertFalse((bool)$this->game->active);
 
+    }
+
+    public function test_guess_validation()
+    {
+        $randomString = 'random-string';
+        $numberLessThanOne = 0;
+        $numberMoreThanOneHundred = 100;
+        $validNumber = 50;
+
+        $response = $this->post($this->url, ['guess' => $validNumber]);
+        $response->assertSessionHasNoErrors();
+
+        $response = $this->post($this->url, ['guess' => $randomString]);
+        $response->assertSessionHasErrors(['guess']);
+
+        $response = $this->post($this->url, ['guess' => $numberLessThanOne]);
+        $response->assertSessionHasErrors(['guess']);
+
+        $response = $this->post($this->url, ['guess' => $numberMoreThanOneHundred]);
+        $response->assertSessionHasErrors(['guess']);
     }
 
 }
