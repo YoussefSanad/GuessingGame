@@ -19,3 +19,6 @@
     <li>Finally .. run "php artisan serve", copy the link into the browser and enjoy</li>
 </ul>
 
+<h2> If you just want to play: </h2>
+<p> GuessingGame is hosted on Heroku <a href="http://multi-guessing-game.herokuapp.com"> Here</a> And the same 5 users with the same credintials are already in the db </p>
+
