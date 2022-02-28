@@ -15,6 +15,7 @@
     <li>run "php artisan db:seed" .. this will create 5 users with emails from "user0@mail.com" to "user4@mail.com" all
         with the password being "password"
     </li>
+    <li>run "php artisan test" to make sure all tests succeed</li>
     <li>Finally .. run "php artisan serve", copy the link into the browser and enjoy</li>
 </ul>
 
