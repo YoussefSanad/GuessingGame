@@ -14,6 +14,7 @@ class GameEngineController extends Controller
 
     /**
      * @param Game    $game
+     * @param User    $user
      * @param Request $request
      * @return void
      */

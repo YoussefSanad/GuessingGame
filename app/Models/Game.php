@@ -20,7 +20,7 @@ class Game extends Model
     public static function getActiveGame(): mixed
     {
         $activeGame = self::whereActive(1)->first();
-        return $activeGame ?? self::factory()->create();
+        return $activeGame ?? self::create(['target_number' => rand(1, 100), 'active' => 1,]);
     }
 
 
